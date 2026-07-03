@@ -9,12 +9,20 @@
       "version": "latest"
     }
   },
-  "postCreateCommand": "pip install --break-system-packages -r requirements.txt",
-  "postStartCommand": "echo 'Listo. Ejecuta: uvicorn app.main:app --reload --host 0.0.0.0 --port 8000'",
-  "forwardPorts": [8000],
+  "postCreateCommand": "pip install --break-system-packages -r requirements.txt -r catalog-service/requirements.txt -r gateway/requirements.txt",
+  "postStartCommand": "echo 'Listo. Revisa el README para levantar los 3 procesos (monolito, catalog-service, gateway) en 3 terminales.'",
+  "forwardPorts": [8000, 8001, 9000],
   "portsAttributes": {
     "8000": {
-      "label": "Mercaloop API",
+      "label": "Monolito viejo",
+      "onAutoForward": "notify"
+    },
+    "8001": {
+      "label": "Catalog Service nuevo",
+      "onAutoForward": "notify"
+    },
+    "9000": {
+      "label": "Gateway",
       "onAutoForward": "openPreview"
     }
   },
